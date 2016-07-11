@@ -6,10 +6,10 @@ class SortedArray {
     var length = array.length;
     var index = 0;
 
-    while (index < length) this.insert(array[index++]);
+    while (index < length) this.push(array[index++]);
   }
 
-  insert(element) {
+  push(element) {
     var array = this.array;
     var compare = this.compare;
     var index = array.length;
@@ -29,7 +29,7 @@ class SortedArray {
     return this;
   }
 
-  search(element) {
+  indexOf(element) {
     var array = this.array;
     var compare = this.compare;
     var high = array.length;
@@ -48,7 +48,7 @@ class SortedArray {
   }
 
   remove(element) {
-    var index = this.search(element);
+    var index = this.indexOf(element);
     if (index >= 0) this.array.splice(index, 1);
     return this;
   }
