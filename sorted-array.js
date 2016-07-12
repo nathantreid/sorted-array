@@ -1,20 +1,24 @@
-class SortedArray {
+'use strict';
+class SortedArray extends Array {
 
-  constructor(array, compare) {
-    this.array = [];
-    this.compare = compare || compareDefault;
-    var length = array.length;
-    var index = 0;
+  constructor(array, compare = compareDefault) {
+    super();
+    this.compare = compare;
 
-    while (index < length) this.push(array[index++]);
+    if (array && array instanceof Array) {
+      var length = array.length;
+      var index = 0;
+
+      while (index < length) this.push(array[index++]);
+    }
   }
 
   push(element) {
-    var array = this.array;
+    var array = this;
     var compare = this.compare;
     var index = array.length;
 
-    array.push(element);
+    super.push(element);
 
     while (index > 0) {
       var i = index, j = --index;
@@ -23,14 +27,15 @@ class SortedArray {
         var temp = array[i];
         array[i] = array[j];
         array[j] = temp;
-      }
+      } else
+        break;
     }
 
     return this;
   }
 
   indexOf(element) {
-    var array = this.array;
+    var array = this;
     var compare = this.compare;
     var high = array.length;
     var low = 0;
@@ -49,7 +54,7 @@ class SortedArray {
 
   remove(element) {
     var index = this.indexOf(element);
-    if (index >= 0) this.array.splice(index, 1);
+    if (index >= 0) this.splice(index, 1);
     return this;
   }
 
