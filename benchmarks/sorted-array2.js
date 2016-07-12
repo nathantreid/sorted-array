@@ -4,7 +4,6 @@ class SortedArray extends Array {
   constructor(array, compare = compareDefault) {
     super();
     this.compare = compare;
-
     if (array && array instanceof Array) {
       var length = array.length;
       var index = 0;
@@ -16,26 +15,43 @@ class SortedArray extends Array {
   push(element) {
     var array = this;
     var compare = this.compare;
-    var index = array.length;
 
-    super.push(element);
+    var high = array.length;
+    var low = 0;
 
-    while (index > 0) {
-      var i = index, j = --index;
-
-      if (compare(array[i], array[j]) < 0) {
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-      } else
-        break;
+    if (high === 0) {
+      super.push(element);
+      return;
     }
 
-    return this;
+    while (high >= low) {
+      var index = (high + low) / 2 >>> 0;
+      var ordering = compare(array[index], element);
+
+      if (ordering < 0) low = index + 1;
+      else if (ordering > 0) high = index;
+      else {
+        array.splice(index, 0, element);
+        return;
+      }
+
+      if (high === low) {
+        if (high > array.length)
+          super.push(element);
+        else {
+          // ordering = compare(array[high], element);
+          // if (ordering === 1) high += 1;
+          array.splice(high, 0, element);
+        }
+        return;
+      }
+
+    }
   }
 
   push2(element) {
     super.push(element);
+
   }
 
   indexOf(element) {
